@@ -5,7 +5,7 @@ provider "aws" {
         # FETCHING DATA ON VPC
 data "aws_vpc" "vpc" {
   tags = {
-    Name = "VPC-1"
+    Name = "VPC-1"   	# REPLACE WITH VPC NAME
   }
 }
 

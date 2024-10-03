@@ -1,0 +1,36 @@
+Documentation: Steps for Creating an Assume Role in AWS
+Steps in Creating Assume Role:
+1. Ensure AWS CLI is Configured
+Before starting, verify that the AWS CLI is installed and configured on your system. This ensures you have the necessary access to manage AWS resources.
+
+2. Create Terraform Files
+Create PROVIDER.tf: This file will specify the provider configuration.
+Create user.tf: In this file, you will create the IAM user first and then enable the Access Key ID. Optionally, you can also add an iam_user_login_profile to enable console access.
+3. Create role.tf
+In the role.tf file:
+
+Include the IAM policy that grants full access to S3.
+Create an IAM role and attach the defined policy to this role.
+4. Create output.tf
+In the output.tf file:
+
+Define outputs to retrieve the Access Key ID and Secret Access Key necessary for CLI access.
+Include the ARN of the role to be assumed. Ensure that the sensitive attribute is set to true for the Secret Access Key to protect sensitive information.
+5. Handling Sensitive Information
+After executing the Terraform configuration, the Secret Access Key will not be displayed directly in the terminal. Instead, it will be shown as secret-key = <sensitive>. To view the secret key, you can use the command:
+	terraform output -json 
+This will allow you to see all outputs, including the sensitive ones.
+
+6. Use the Retrieved Credentials
+
+Now you have all the necessary IDs to assume the role:
+1. Configure AWS CLI: Log in to AWS CLI using the user created with Terraform.
+	aws configure
+2. Assume the Role: Use the following command to assume the role and retrieve temporary credentials:
+	aws sts assume-role --role-arn "arn:of:the:role" --role-session-name "any_name"
+    This command will display temporary credentials.
+3. Set Environment Variables: Export the retrieved credentials to your environment variables:
+	set AWS_ACCESS_KEY_ID=<access_key_id>
+	set AWS_SECRET_ACCESS_KEY=<secret_access_key>
+	set AWS_SESSION_TOKEN=<session_token>
+By following these steps, you will successfully create an IAM user, configure the role, and assume that role using temporary credentials.

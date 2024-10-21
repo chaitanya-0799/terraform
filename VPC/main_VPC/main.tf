@@ -1,5 +1,7 @@
 resource "aws_vpc" "demo-app" {
   cidr_block = var.cidr-range
+  enable_dns_hostnames = true
+  enable_dns_support = true
   tags = {
     Name = var.vpc-name
   }
@@ -9,6 +11,7 @@ resource "aws_subnet" "az1" {
   vpc_id = aws_vpc.demo-app.id
   cidr_block = var.cidr-az1
   availability_zone = var.az-2a
+  map_public_ip_on_launch = true
   tags = {
     Name = var.az1-name
   }
@@ -45,6 +48,7 @@ resource "aws_subnet" "az2" {
   vpc_id = aws_vpc.demo-app.id
   cidr_block = var.cidr-az2
   availability_zone = var.az-2b
+  map_public_ip_on_launch = true
   tags = {
     Name = var.az2-name
   }
@@ -54,6 +58,7 @@ resource "aws_subnet" "az3" {
   vpc_id = aws_vpc.demo-app.id
   cidr_block = var.cidr-az3
   availability_zone = var.az-2c
+  map_public_ip_on_launch = true
   tags = {
     Name = var.az3-name
   }

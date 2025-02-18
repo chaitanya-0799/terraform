@@ -1,3 +1,7 @@
+variable "aws-region" {
+  type = string
+}
+
 variable "vpc_cidr_block" {
   type = string
 }
